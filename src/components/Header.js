@@ -1,6 +1,8 @@
 import { FaBars, FaMagnifyingGlass } from "react-icons/fa6";
 import logo from "../assets/logo.svg";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 const StyledHeader = styled.header`
   position: fixed;
@@ -89,6 +91,24 @@ const StyledHeader = styled.header`
 `;
 
 const Header = () => {
+  const navigate = useNavigate();
+  const [token, setToken] = useState(null);
+  // 처음 불러우는 시점 - 로그인 여부 체크
+  useEffect(() => {
+    // 로그인시 localStorage에 넣은 토큰
+    setToken(localStorage.getItem("token"));
+  }, []);
+
+  const login = () => {
+    navigate("/login");
+  };
+
+  const logout = () => {
+    // 로그아웃시 localStorage 토큰 remove
+    localStorage.removeItem("token");
+    setToken(null);
+  };
+
   return (
     <StyledHeader>
       <div className="header-start">
@@ -104,7 +124,15 @@ const Header = () => {
         </button>
       </div>
       <div className="header-end">
-        <button type="button">로그인</button>
+        {token === null ? (
+          <button type="button" onClick={login}>
+            로그인
+          </button>
+        ) : (
+          <button type="button" onClick={logout}>
+            로그아웃
+          </button>
+        )}
       </div>
     </StyledHeader>
   );
