@@ -24,7 +24,7 @@ const Signup = () => {
     const result = await signup(
       // {
       //   id: id,
-      //   password: password,
+      //   password: password,`-
       //   email: email,
       //   phone: phone,
       // }

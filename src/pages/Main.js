@@ -1,31 +1,42 @@
 import "../assets/style.css";
+import { Link } from "react-router-dom";
 import { FaHouseChimney } from "react-icons/fa6";
 import { FaFolder } from "react-icons/fa";
-import { getVideos } from "../api/video";
-import { useState, useEffect } from "react";
+import { useOutletContext } from "react-router-dom";
+import { useEffect } from "react";
 
 const Main = () => {
-  const [videos, setVideos] = useState([]);
-  const videoAPI = async () => {
-    const result = await getVideos();
-    setVideos(result.data);
+  const { videos, setPage } = useOutletContext();
+
+  // 끝자락 스크롤 찾는 시점
+  const scroll = () => {
+    if (
+      window.innerHeight + document.documentElement.scrollTop >=
+      document.documentElement.offsetHeight
+    ) {
+      setPage((page) => page + 1);
+    }
   };
 
+  // 페이징
   useEffect(() => {
-    videoAPI();
-  }, []);
+    window.addEventListener("scroll", scroll);
+    return () => {
+      window.removeEventListener("scroll", scroll);
+    };
+  }, [setPage]);
 
   return (
     <main>
       <aside>
-        <a href="">
+        <Link to="">
           <FaHouseChimney />
           <span>홈</span>
-        </a>
-        <a href="">
+        </Link>
+        <Link to="">
           <FaFolder />
           <span>구독</span>
-        </a>
+        </Link>
       </aside>
       <div className="main-content">
         <nav>

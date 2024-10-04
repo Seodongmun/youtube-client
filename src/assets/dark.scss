@@ -1,0 +1,19 @@
+body.dark {
+  background-color: black;
+  color: white;
+
+  header,
+  nav {
+    background-color: black;
+    color: white;
+  }
+  svg,
+  span,
+  p {
+    color: white;
+  }
+  input,
+  textarea {
+    color: black;
+  }
+}

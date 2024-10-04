@@ -3,6 +3,7 @@ import Layout from "./components/Layout";
 import Main from "./pages/Main";
 import Login from "./pages/member/Login";
 import Signup from "./pages/member/Signup";
+import LoginSuccess from "./components/LoginSuccess";
 
 const router = createBrowserRouter([
   {
@@ -20,9 +21,8 @@ const router = createBrowserRouter([
   },
 
   {
-    // 구글 로그인 메서드
-    // path: "/login-success",
-    // element: <LoginSuccess />,
+    path: "/login-success",
+    element: <LoginSuccess />,
   },
 ]);
 

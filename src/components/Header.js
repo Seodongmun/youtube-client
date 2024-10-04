@@ -1,8 +1,14 @@
 import { FaBars, FaMagnifyingGlass } from "react-icons/fa6";
 import logo from "../assets/logo.svg";
+import logoDark from "../assets/logo-dark.svg";
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
+import Modal from "./Modal";
+import { useAuth } from "../contexts/AuthContext";
+import { useTheme } from "../contexts/ThemeContext";
+import { IoSunnySharp } from "react-icons/io5";
+import { FaMoon } from "react-icons/fa";
 
 const StyledHeader = styled.header`
   position: fixed;
@@ -51,6 +57,7 @@ const StyledHeader = styled.header`
       background: none;
       border: none;
       font-size: 20px;
+      margin: 10px;
     }
   }
   /* 반응형 */
@@ -62,14 +69,14 @@ const StyledHeader = styled.header`
         padding: 10px 20px;
         border-top-left-radius: 20px;
         border-bottom-left-radius: 20px;
-        border: 1px solid #ddd;
+        border: 1px solid #bbb;
         width: 30%;
         max-width: 500px;
       }
       button {
-        border: 1px solid #ddd;
+        border: 1px solid #bbb;
         border-left: none;
-        padding: 6px 12px;
+        padding: 10px 12px;
         border-top-right-radius: 20px;
         border-bottom-right-radius: 20px;
       }
@@ -90,51 +97,77 @@ const StyledHeader = styled.header`
   }
 `;
 
-const Header = () => {
+const Header = ({ onUpload, onSearch }) => {
   const navigate = useNavigate();
-  const [token, setToken] = useState(null);
+  const { token, logout } = useAuth();
+  const [isOpen, setIsOpen] = useState(false);
   // 처음 불러우는 시점 - 로그인 여부 체크
-  useEffect(() => {
-    // 로그인시 localStorage에 넣은 토큰
-    setToken(localStorage.getItem("token"));
-  }, []);
+  const { theme, toggleTheme } = useTheme();
+  const [keyword, setKeyword] = useState("");
 
   const login = () => {
     navigate("/login");
   };
 
-  const logout = () => {
-    // 로그아웃시 localStorage 토큰 remove
-    localStorage.removeItem("token");
-    setToken(null);
+  const search = (e) => {
+    if (e.key === "Enter") {
+      onSearch(keyword);
+    }
+  };
+
+  const open = () => {
+    setIsOpen(true);
+  };
+  const close = () => {
+    setIsOpen(false);
   };
 
   return (
-    <StyledHeader>
-      <div className="header-start">
-        <FaBars />
-        <a>
-          <img src={logo} />
-        </a>
-      </div>
-      <div className="header-center">
-        <input type="text" placeholder="검색" />
-        <button type="button">
-          <FaMagnifyingGlass />
-        </button>
-      </div>
-      <div className="header-end">
-        {token === null ? (
-          <button type="button" onClick={login}>
-            로그인
+    <>
+      <StyledHeader>
+        <div className="header-start">
+          <FaBars />
+          <Link to={"/"}>
+            <img src={theme === "light" ? logo : logoDark} />
+          </Link>
+        </div>
+        <div className="header-center">
+          <input
+            type="text"
+            placeholder="검색"
+            value={keyword}
+            onChange={(e) => setKeyword(e.target.value)}
+            onKeyUp={search}
+          />
+          <button
+            type="button"
+            onClick={() => {
+              onSearch(keyword);
+            }}
+          >
+            <FaMagnifyingGlass />
           </button>
-        ) : (
-          <button type="button" onClick={logout}>
-            로그아웃
+        </div>
+        <div className="header-end">
+          {token === null ? (
+            <button type="button" onClick={login}>
+              로그인
+            </button>
+          ) : (
+            <button type="button" onClick={logout}>
+              로그아웃
+            </button>
+          )}
+          <button type="button" onClick={open}>
+            업로드
           </button>
-        )}
-      </div>
-    </StyledHeader>
+          <button type="button" onClick={toggleTheme}>
+            {theme === "light" ? <FaMoon /> : <IoSunnySharp />}
+          </button>
+        </div>
+      </StyledHeader>
+      <Modal isOpen={isOpen} onClose={close} onUpload={onUpload} />
+    </>
   );
 };
 export default Header;
