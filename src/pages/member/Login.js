@@ -11,6 +11,7 @@ const Login = () => {
     id: "",
     password: "",
   });
+
   // 구글 로그인
   const google = () => {
     window.location.href = "http://localhost:8080/oauth2/authorization/google";
@@ -27,7 +28,7 @@ const Login = () => {
       if (result.status === 200) {
         authLogin(result.data); // result.data 로그인 데이터
         alert("로그인 성공!");
-        navigate("/");
+        window.location.href = "/";
       }
     } catch {
       alert("아이디나 비밀번호가 다릅니다");

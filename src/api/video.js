@@ -21,3 +21,7 @@ export const addVideo = async (data) => {
     },
   });
 };
+
+export const getVideo = async (videoCode) => {
+  return await instance.get(`video/${videoCode}`);
+};

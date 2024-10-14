@@ -4,9 +4,15 @@ import { FaHouseChimney } from "react-icons/fa6";
 import { FaFolder } from "react-icons/fa";
 import { useOutletContext } from "react-router-dom";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Main = () => {
   const { videos, setPage } = useOutletContext();
+  const navigate = useNavigate();
+
+  const detail = (videoCode) => {
+    navigate(`/video/${videoCode}`);
+  };
 
   // 끝자락 스크롤 찾는 시점
   const scroll = () => {
@@ -57,7 +63,12 @@ const Main = () => {
                 <img src={video.videoImg} />
                 <video src={video.videoUrl} controls></video>
               </div>
-              <div className="video-info">
+              <div
+                className="video-info"
+                onClick={() => {
+                  detail(video.videoCode);
+                }}
+              >
                 <img src={video.channel.channelImg} />
                 <div className="video-desc">
                   <h2>${video.videoTitle}</h2>
