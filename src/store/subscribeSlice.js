@@ -1,6 +1,14 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { addSub, removeSub, countSub, getSub } from "../api/subscribe";
 
+export const fetchSub = createAsyncThunk(
+  "subscribe/fetchSub",
+  async (channelCode) => {
+    const response = await getSub(channelCode);
+    return response.data;
+  }
+);
+
 export const subscribe = createAsyncThunk(
   "subscribe/subscribe",
   async (data) => {
@@ -21,14 +29,6 @@ export const subCount = createAsyncThunk(
   "subscribe/subCount",
   async (channelCode) => {
     const response = await countSub(channelCode);
-    return response.data;
-  }
-);
-
-export const fetchSub = createAsyncThunk(
-  "subscribe/fetchSub",
-  async (channelCode) => {
-    const response = await getSub(channelCode);
     return response.data;
   }
 );

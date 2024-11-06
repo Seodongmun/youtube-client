@@ -6,6 +6,7 @@ import Signup from "./pages/member/Signup";
 import LoginSuccess from "./components/LoginSuccess";
 import Count from "./components/Count";
 import Detail from "./pages/video/Detail";
+import Video from "./pages/video/Video";
 
 const router = createBrowserRouter([
   {
@@ -19,6 +20,7 @@ const router = createBrowserRouter([
       },
     ],
   },
+
   {
     path: "/login",
     element: <Login />,
@@ -35,6 +37,10 @@ const router = createBrowserRouter([
   {
     path: "/count",
     element: <Count />,
+  },
+  {
+    path: "/detail/:videoCode",
+    element: <Video />,
   },
 ]);
 

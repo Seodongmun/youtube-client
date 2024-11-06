@@ -14,7 +14,6 @@ const LoginSuccess = () => {
 
     // 토큰 로컬스토리지에 저장
     login(token);
-
     // 메인 페이지로 이동
     navigate("/");
   }, []);

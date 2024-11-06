@@ -18,7 +18,14 @@ export const AuthProvider = ({ children }) => {
   // 로그인 기능
   const login = (data) => {
     // 파라미터로 토큰 받음
-    localStorage.setItem("token", data.token);
+    console.log("로그인 토큰" + localStorage.getItem("token"));
+    console.log("받은 데이터" + data);
+    console.log("데이터 뭐임?" + data.id);
+    console.log("토큰 뭐노 = " + data.token);
+    // 문제점 - 구글로그인으로 id랑 token 두개 받아오는 과정에서 id 받는 부분이 누락
+    // token은 data형태로 들어오는중
+
+    localStorage.setItem("token", data);
     localStorage.setItem("id", data.id);
     setToken(data.token);
     setId(data.id);

@@ -15,6 +15,7 @@ export const viewComments = async (videoCode) => {
   return await instance.get(`video/${videoCode}/comment`);
 };
 
+// "http://localhost:8080/api/private/comment"
 export const addComment = async (data) => {
   return await authorize.post("comment", data);
 };

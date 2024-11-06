@@ -108,20 +108,17 @@ const Header = ({ onUpload, onSearch }) => {
   const login = () => {
     navigate("/login");
   };
-
   const search = (e) => {
     if (e.key === "Enter") {
       onSearch(keyword);
     }
   };
-
   const open = () => {
     setIsOpen(true);
   };
   const close = () => {
     setIsOpen(false);
   };
-
   return (
     <>
       <StyledHeader>
